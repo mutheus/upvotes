@@ -1,25 +1,23 @@
 import { createGlobalStyle } from 'styled-components'
 import { App } from 'app'
+import 'normalize-css'
 
 const GlobalStyle = createGlobalStyle`
-  * {
-    padding: 0px;
-    margin: 0px;
-  }
   html {
-    font-size: 1em;
+    font-size: 100%;
+    box-sizing: border-box;
   }
+
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+
   body {
-    font-family: 'Fira Code', sans-serif;
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
+    font-family: system-ui, sans-serif;
   }
 `
 
-function Root () {
+export function Root () {
   return (
     <>
       <GlobalStyle />
@@ -27,5 +25,3 @@ function Root () {
     </>
   )
 }
-
-export { Root }
