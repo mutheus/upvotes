@@ -1,10 +1,12 @@
 import { FormEvent, useState } from 'react'
 import { api } from 'services/api'
 import { Form } from 'shared/styles'
+import { useNavigate } from 'react-router'
 
 export function Signup () {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const navigate = useNavigate()
 
   const register = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -14,8 +16,7 @@ export function Signup () {
       password,
     })
 
-    setUsername('')
-    setPassword('')
+    navigate('/login')
   }
 
   return (

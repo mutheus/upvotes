@@ -1,4 +1,8 @@
-import { createContext, ReactNode } from 'react'
+import {
+  useState,
+  createContext,
+  ReactNode,
+} from 'react'
 
 type AuthProviderProps = {
   children: ReactNode
@@ -7,8 +11,10 @@ type AuthProviderProps = {
 export const AuthContext = createContext({})
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
+  const [isAuthenticated] = useState(false)
+
   return (
-    <AuthContext.Provider value={{}}>
+    <AuthContext.Provider value={{ isAuthenticated }}>
       {children}
     </AuthContext.Provider>
   )
