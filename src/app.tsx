@@ -1,6 +1,7 @@
 import styled from 'styled-components/macro'
 import { Routes } from 'routes'
 import { BrowserRouter as Router } from 'react-router-dom'
+import AuthProvider from 'contexts/auth-context'
 
 const Container = styled.div`
   padding: 2em;
@@ -8,10 +9,12 @@ const Container = styled.div`
 
 export function App () {
   return (
-    <Container>
-      <Router>
-        <Routes />
-      </Router>
-    </Container>
+    <AuthProvider>
+      <Container>
+        <Router>
+          <Routes />
+        </Router>
+      </Container>
+    </AuthProvider>
   )
 }
