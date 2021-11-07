@@ -14,7 +14,7 @@ export function Signin () {
   const { setIsAuthenticated } = useContext(AuthContext)
   const navigate = useNavigate()
 
-  const handleSignin = async (e: FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     const { data: token } = await api.post('/sign-in', {
@@ -29,7 +29,7 @@ export function Signin () {
   }
 
   return (
-    <Form onSubmit={handleSignin}>
+    <Form onSubmit={handleLogin}>
       <h4>Sign in</h4>
 
       <label htmlFor='username'>

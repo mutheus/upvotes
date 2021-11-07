@@ -11,6 +11,7 @@ import { api } from 'services/api'
 type AuthContextData = {
   isAuthenticated: boolean
   setIsAuthenticated: Dispatch<SetStateAction<boolean>>
+  isLoading: boolean
 }
 
 type AuthProviderProps = {
@@ -35,10 +36,14 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     setIsLoading(false)
   }, [])
 
-  if (isLoading) return <h5>Loading...</h5>
-
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+    <AuthContext.Provider
+      value={{
+        isAuthenticated,
+        setIsAuthenticated,
+        isLoading,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   )
