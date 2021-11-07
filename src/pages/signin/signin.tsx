@@ -25,7 +25,7 @@ export function Signin () {
     localStorage.setItem('token', JSON.stringify(token))
     api.defaults.headers.common.Authorization = `Bearer ${token}`
     setIsAuthenticated(true)
-    navigate('/feeds')
+    navigate('/home')
   }
 
   return (

@@ -1,7 +1,7 @@
 import { Routes as Switch, Route, Navigate } from 'react-router-dom'
 import { Signin } from 'pages/signin'
 import { Signup } from 'pages/signup'
-import { Feeds } from 'pages/feeds'
+import { Feeds } from 'pages/home'
 import { ReactNode, useContext } from 'react'
 import { AuthContext } from 'contexts/auth-context'
 
@@ -17,16 +17,12 @@ function RequireAuth ({ children, redirectTo }: RequireAuthProps) {
 }
 
 export function Routes () {
-  const { isLoading } = useContext(AuthContext)
-
-  if (isLoading) return <h5>Loading...</h5>
-
   return (
     <Switch>
       <Route path='/' element={<Signup />} />
       <Route path='/login' element={<Signin />} />
       <Route
-        path='/feeds'
+        path='/home'
         element={
           <RequireAuth redirectTo='/login'>
             <Feeds />
