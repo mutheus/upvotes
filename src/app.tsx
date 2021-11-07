@@ -1,5 +1,6 @@
 import styled from 'styled-components/macro'
 import { Routes } from 'routes'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 const Container = styled.div`
   padding: 2em;
@@ -8,7 +9,9 @@ const Container = styled.div`
 export function App () {
   return (
     <Container>
-      <Routes />
+      <Router>
+        <Routes />
+      </Router>
     </Container>
   )
 }
