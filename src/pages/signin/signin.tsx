@@ -1,12 +1,20 @@
-import { FormEvent, useState } from 'react'
+import {
+  FormEvent,
+  useState,
+  useContext,
+} from 'react'
 import { api } from 'services/api'
 import { Form } from 'shared/styles'
+import { AuthContext } from 'contexts/auth-context'
+import { useNavigate } from 'react-router'
 
-export function Login () {
+export function Signin () {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const { setIsAuthenticated } = useContext(AuthContext)
+  const navigate = useNavigate()
 
-  const login = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSignin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     const { data: token } = await api.post('/sign-in', {
@@ -16,10 +24,12 @@ export function Login () {
 
     localStorage.setItem('token', JSON.stringify(token))
     api.defaults.headers.common.Authorization = `Bearer ${token}`
+    setIsAuthenticated(true)
+    navigate('/feeds')
   }
 
   return (
-    <Form onSubmit={login}>
+    <Form onSubmit={handleSignin}>
       <h4>Sign in</h4>
 
       <label htmlFor='username'>

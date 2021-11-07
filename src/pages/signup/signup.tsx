@@ -8,7 +8,7 @@ export function Signup () {
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
 
-  const register = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSignup = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     await api.post('/sign-up', {
@@ -20,7 +20,7 @@ export function Signup () {
   }
 
   return (
-    <Form onSubmit={register}>
+    <Form onSubmit={handleSignup}>
       <h4>Sign up</h4>
 
       <label htmlFor='username'>
