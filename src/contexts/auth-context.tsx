@@ -11,6 +11,7 @@ import { api } from 'services/api'
 type AuthContextData = {
   isAuthenticated: boolean
   setIsAuthenticated: Dispatch<SetStateAction<boolean>>
+  isLoading: boolean
 }
 
 type AuthProviderProps = {
@@ -21,6 +22,7 @@ export const AuthContext = createContext({} as AuthContextData)
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const token = localStorage.getItem('token')
@@ -28,7 +30,10 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     if (token) {
       api.defaults.headers.common.Authorization = `Bearer ${JSON.parse(token)}`
       setIsAuthenticated(true)
+      setIsLoading(true)
     }
+
+    setIsLoading(false)
   }, [])
 
   return (
@@ -36,6 +41,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       value={{
         isAuthenticated,
         setIsAuthenticated,
+        isLoading,
       }}
     >
       {children}
