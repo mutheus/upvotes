@@ -5,6 +5,8 @@ import AuthProvider from 'contexts/auth-context'
 
 const Container = styled.div`
   padding: 2em;
+  min-height: 100vh;
+  color: ${({ theme }) => theme.colors.text};
 `
 
 export function App () {

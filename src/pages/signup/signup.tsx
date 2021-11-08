@@ -1,6 +1,14 @@
 import { FormEvent, useState } from 'react'
 import { api } from 'services/api'
-import { Form } from 'shared/styles'
+import {
+  FormWrapper,
+  Form,
+  FormTitle,
+  FormDesc,
+  FormInputWrapper,
+  FormButton,
+  FormNotice,
+} from 'shared/styles'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 
@@ -21,25 +29,28 @@ export function Signup () {
   }
 
   return (
-    <>
+    <FormWrapper>
       <Form onSubmit={handleSignup}>
-        <h4>Sign up</h4>
+        <FormTitle>Sign up</FormTitle>
 
-        <label htmlFor='username'>
-          Username:
-          <br />
+        <FormDesc>Welcome! Join us today creating your account.</FormDesc>
+
+        <FormInputWrapper>
+          <label htmlFor='username'>Username:</label>
+
           <input
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             id='username'
             type='text'
             name='username'
+            placeholder='e.g. john@email.com'
           />
-        </label>
+        </FormInputWrapper>
 
-        <label htmlFor='password'>
-          Password:
-          <br />
+        <FormInputWrapper>
+          <label htmlFor='password'>Password:</label>
+
           <input
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -47,12 +58,12 @@ export function Signup () {
             type='password'
             name='password'
           />
-        </label>
+        </FormInputWrapper>
 
-        <button type='submit'>Sign up</button>
+        <FormButton type='submit'>Sign up</FormButton>
       </Form>
 
-      <p>Already have an account? <Link to='/login'>Sign in</Link></p>
-    </>
+      <FormNotice>Already have an account? <Link to='/login'>Sign in</Link></FormNotice>
+    </FormWrapper>
   )
 }

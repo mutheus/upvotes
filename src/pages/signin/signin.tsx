@@ -4,9 +4,18 @@ import {
   useContext,
 } from 'react'
 import { api } from 'services/api'
-import { Form } from 'shared/styles'
+import {
+  FormWrapper,
+  Form,
+  FormTitle,
+  FormDesc,
+  FormInputWrapper,
+  FormButton,
+  FormNotice,
+} from 'shared/styles'
 import { AuthContext } from 'contexts/auth-context'
 import { useNavigate } from 'react-router'
+import { Link } from 'react-router-dom'
 
 export function Signin () {
   const [username, setUsername] = useState('')
@@ -29,34 +38,41 @@ export function Signin () {
   }
 
   return (
-    <Form onSubmit={handleLogin}>
-      <h4>Sign in</h4>
+    <FormWrapper>
+      <Form onSubmit={handleLogin}>
+        <FormTitle>Login</FormTitle>
 
-      <label htmlFor='username'>
-        Username:
-        <br />
-        <input
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          id='username'
-          type='text'
-          name='username'
-        />
-      </label>
+        <FormDesc>Welcome back! Please login to your account.</FormDesc>
 
-      <label htmlFor='password'>
-        Password:
-        <br />
-        <input
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          id='password'
-          type='password'
-          name='password'
-        />
-      </label>
+        <FormInputWrapper>
+          <label htmlFor='username'>Username:</label>
 
-      <button type='submit'>Sign in</button>
-    </Form>
+          <input
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            id='username'
+            type='text'
+            name='username'
+            placeholder='e.g. john@email.com'
+          />
+        </FormInputWrapper>
+
+        <FormInputWrapper>
+          <label htmlFor='password'>Password:</label>
+
+          <input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            id='password'
+            type='password'
+            name='password'
+          />
+        </FormInputWrapper>
+
+        <FormButton type='submit'>Login</FormButton>
+      </Form>
+
+      <FormNotice>Don’t have an account? <Link to='/'>Sign up</Link></FormNotice>
+    </FormWrapper>
   )
 }
