@@ -1,5 +1,6 @@
-import { createGlobalStyle } from 'styled-components'
+import { ThemeProvider, createGlobalStyle } from 'styled-components'
 import { App } from 'app'
+import { theme } from 'resources/theme'
 import 'normalize-css'
 
 const GlobalStyle = createGlobalStyle`
@@ -13,15 +14,15 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    font-family: system-ui, sans-serif;
+    font-family: 'Noto Sans', sans-serif;
   }
 `
 
 export function Root () {
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <GlobalStyle />
       <App />
-    </>
+    </ThemeProvider>
   )
 }
