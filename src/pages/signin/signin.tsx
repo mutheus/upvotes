@@ -12,7 +12,7 @@ import {
   FormInputWrapper,
   FormButton,
   FormNotice,
-} from 'shared/styles'
+} from 'ui/form-styles'
 import { AuthContext } from 'contexts/auth-context'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
@@ -53,7 +53,7 @@ export function Signin () {
             id='username'
             type='text'
             name='username'
-            placeholder='e.g. john@email.com'
+            placeholder='name@domain.com'
           />
         </FormInputWrapper>
 
@@ -66,6 +66,7 @@ export function Signin () {
             id='password'
             type='password'
             name='password'
+            placeholder='at least 4 characters'
           />
         </FormInputWrapper>
 

@@ -6,5 +6,6 @@ export const theme: DefaultTheme = {
     lightPurple: '#9879D2',
     text: '#3E3E3E',
     gray: '#C7C7C7',
+    darkGray: '#8a8a8a',
   },
 }

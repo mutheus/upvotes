@@ -27,8 +27,10 @@ export const FormInputWrapper = styled.p`
   display: flex;
   flex-direction: column;
   gap: .8em;
-  font-weight: 400;
+  font-weight: 700;
   margin: 0 0 1em;
+  font-size: .9rem;
+  color: ${({ theme }) => theme.colors.darkGray};
 
   input {
     height: 37px;
@@ -38,6 +40,10 @@ export const FormInputWrapper = styled.p`
     font-size: .9rem;
     font-weight: 700;
     color: ${({ theme }) => theme.colors.text};
+
+    &::placeholder {
+      color: ${({ theme }) => theme.colors.gray};
+    }
 
     &:focus-visible {
       outline: 2px solid ${({ theme }) => theme.colors.purple};
@@ -64,5 +70,6 @@ export const FormNotice = styled.p`
 
   a {
     color: ${({ theme }) => theme.colors.lightPurple};
+    font-weight: 700;
   }
 `

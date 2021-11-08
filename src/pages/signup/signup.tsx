@@ -8,7 +8,7 @@ import {
   FormInputWrapper,
   FormButton,
   FormNotice,
-} from 'shared/styles'
+} from 'ui/form-styles'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 
@@ -44,7 +44,7 @@ export function Signup () {
             id='username'
             type='text'
             name='username'
-            placeholder='e.g. john@email.com'
+            placeholder='name@domain.com'
           />
         </FormInputWrapper>
 
@@ -57,6 +57,7 @@ export function Signup () {
             id='password'
             type='password'
             name='password'
+            placeholder='at least 4 characters'
           />
         </FormInputWrapper>
 
