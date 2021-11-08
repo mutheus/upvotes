@@ -1,14 +1,13 @@
 import { FormEvent, useState } from 'react'
 import { api } from 'services/api'
 import {
-  FormWrapper,
   Form,
   FormTitle,
   FormDesc,
   FormInputWrapper,
-  FormButton,
   FormNotice,
 } from 'ui/form-styles'
+import { Wrapper, Button } from 'shared/styles'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 
@@ -29,7 +28,7 @@ export function Signup () {
   }
 
   return (
-    <FormWrapper>
+    <Wrapper>
       <Form onSubmit={handleSignup}>
         <FormTitle>Sign up</FormTitle>
 
@@ -61,10 +60,10 @@ export function Signup () {
           />
         </FormInputWrapper>
 
-        <FormButton type='submit'>Sign up</FormButton>
+        <Button type='submit'>Sign up</Button>
       </Form>
 
       <FormNotice>Already have an account? <Link to='/login'>Sign in</Link></FormNotice>
-    </FormWrapper>
+    </Wrapper>
   )
 }

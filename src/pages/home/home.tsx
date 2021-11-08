@@ -1,7 +1,10 @@
-import { AuthContext } from 'contexts/auth-context'
 import { useContext, useEffect, useState } from 'react'
+import { AuthContext } from 'contexts/auth-context'
 import { useNavigate } from 'react-router'
 import { api } from 'services/api'
+import BlankUser from './assets/blank-user.png'
+import { ReactComponent as BulbIcon } from './assets/bulb-icon.svg'
+import * as S from './styles'
 
 type FeedType = {
   id: number,
@@ -38,6 +41,26 @@ export function Home () {
 
   return (
     <>
+      <S.HomeTitle>Home</S.HomeTitle>
+
+      <S.UserWrapper>
+        <S.UserAvatar src={BlankUser} alt='User' />
+
+        <S.TextFieldWrapper>
+          <S.FeedTextArea placeholder='What’s happening?' />
+
+          <S.FieldFooter>
+            <S.HintWrapper>
+              <BulbIcon />
+
+              <S.Hint>Share your thoughts</S.Hint>
+            </S.HintWrapper>
+
+            <S.FeedButton>Send to Feed</S.FeedButton>
+          </S.FieldFooter>
+        </S.TextFieldWrapper>
+      </S.UserWrapper>
+
       <button onClick={handleLogoutClick}>Log out</button>
 
       {

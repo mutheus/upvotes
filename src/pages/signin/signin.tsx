@@ -5,14 +5,13 @@ import {
 } from 'react'
 import { api } from 'services/api'
 import {
-  FormWrapper,
   Form,
   FormTitle,
   FormDesc,
   FormInputWrapper,
-  FormButton,
   FormNotice,
 } from 'ui/form-styles'
+import { Wrapper, Button } from 'shared/styles'
 import { AuthContext } from 'contexts/auth-context'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
@@ -38,7 +37,7 @@ export function Signin () {
   }
 
   return (
-    <FormWrapper>
+    <Wrapper>
       <Form onSubmit={handleLogin}>
         <FormTitle>Login</FormTitle>
 
@@ -70,10 +69,10 @@ export function Signin () {
           />
         </FormInputWrapper>
 
-        <FormButton type='submit'>Login</FormButton>
+        <Button type='submit'>Login</Button>
       </Form>
 
       <FormNotice>Don’t have an account? <Link to='/'>Sign up</Link></FormNotice>
-    </FormWrapper>
+    </Wrapper>
   )
 }
