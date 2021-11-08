@@ -1,5 +1,10 @@
-import { Button } from 'shared/styles'
+import { Button, Wrapper } from 'shared/styles'
 import styled from 'styled-components'
+
+export const HomeContainer = styled(Wrapper)`
+  max-width: 35em;
+  padding: 0;
+`
 
 export const HomeTitle = styled.h1`
   margin-bottom: 1.4em;

@@ -40,7 +40,7 @@ export function Home () {
   }
 
   return (
-    <>
+    <S.HomeContainer>
       <S.HomeTitle>Home</S.HomeTitle>
 
       <S.UserWrapper>
@@ -78,6 +78,6 @@ export function Home () {
           </div>
         ))
       }
-    </>
+    </S.HomeContainer>
   )
 }
