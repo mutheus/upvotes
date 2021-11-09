@@ -9,9 +9,10 @@ import { api } from 'services/api'
 
 type FeedItemProps = {
   feed: FeedType
+  onInteraction: () => void
 }
 
-export function FeedItem ({ feed }: FeedItemProps) {
+export function FeedItem ({ feed, onInteraction }: FeedItemProps) {
   const isLikedTrue = !!feed.activeUserLikedIt
   const isLovedTrue = !!feed.activeUserLovedIt
 
@@ -20,6 +21,8 @@ export function FeedItem ({ feed }: FeedItemProps) {
       feedId: id,
       like: !isLikedTrue,
     })
+
+    onInteraction()
   }
 
   const handleLoveClick = async (id: number) => {
@@ -27,6 +30,8 @@ export function FeedItem ({ feed }: FeedItemProps) {
       feedId: id,
       love: !isLovedTrue,
     })
+
+    onInteraction()
   }
 
   return (
