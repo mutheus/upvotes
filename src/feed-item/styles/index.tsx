@@ -1,8 +1,10 @@
 import styled, { css } from 'styled-components/macro'
 
-type BtnProps = {
-  activeUserLikedIt?: number
-  activeUserLovedIt?: number
+type LoveBtnProps = {
+  isLovedTrue: boolean
+}
+type LikeBtnProps = {
+  isLikedTrue: boolean
 }
 
 export const FeedItemContainer = styled.div`
@@ -64,18 +66,18 @@ const Button = styled.button`
   justify-content: center;
 `
 
-export const LoveBtn = styled(Button)<BtnProps>`${({ activeUserLikedIt, theme }) => css`
+export const LoveBtn = styled(Button)<LoveBtnProps>`${({ isLovedTrue, theme }) => css`
   svg {
     path {
-      fill: ${activeUserLikedIt === 1 ? theme.colors.purple : theme.colors.text};
+      fill: ${isLovedTrue ? theme.colors.purple : theme.colors.text};
     }
   }
 `}`
 
-export const LikeBtn = styled(Button)<BtnProps>`${({ activeUserLovedIt, theme }) => css`
+export const LikeBtn = styled(Button)<LikeBtnProps>`${({ isLikedTrue, theme }) => css`
   svg {
     path {
-      fill: ${activeUserLovedIt === 1 ? theme.colors.purple : theme.colors.text};
+      fill: ${isLikedTrue ? theme.colors.purple : theme.colors.text};
     }
   }
 `}`

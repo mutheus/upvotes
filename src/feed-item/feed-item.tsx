@@ -5,12 +5,30 @@ import { ReactComponent as LikeIconFilled } from './assets/like-icon-filled.svg'
 import BlankUser from 'shared/assets/blank-user.png'
 import { FeedType } from 'feeds'
 import * as S from './styles'
+import { api } from 'services/api'
 
 type FeedItemProps = {
   feed: FeedType
 }
 
 export function FeedItem ({ feed }: FeedItemProps) {
+  const isLikedTrue = !!feed.activeUserLikedIt
+  const isLovedTrue = !!feed.activeUserLovedIt
+
+  const handleLikeClick = async (id: number) => {
+    await api.post('/reaction', {
+      feedId: id,
+      like: !isLikedTrue,
+    })
+  }
+
+  const handleLoveClick = async (id: number) => {
+    await api.post('/reaction', {
+      feedId: id,
+      love: !isLovedTrue,
+    })
+  }
+
   return (
     <S.FeedItemContainer>
       <S.UserAvatar src={BlankUser} alt='Blank user' />
@@ -24,9 +42,9 @@ export function FeedItem ({ feed }: FeedItemProps) {
 
         <S.Interactions>
           <div>
-            <S.LikeBtn activeUserLikedIt={feed.activeUserLikedIt}>
+            <S.LikeBtn onClick={() => handleLikeClick(feed.id)} isLikedTrue={isLikedTrue}>
               {
-                feed.activeUserLikedIt === 1
+                isLikedTrue
                   ? (
                     <LikeIconFilled />
                     )
@@ -42,9 +60,9 @@ export function FeedItem ({ feed }: FeedItemProps) {
           </div>
 
           <div>
-            <S.LoveBtn activeUserLovedIt={feed.activeUserLovedIt}>
+            <S.LoveBtn onClick={() => handleLoveClick(feed.id)} isLovedTrue={isLovedTrue}>
               {
-                feed.activeUserLovedIt === 1
+                isLovedTrue
                   ? (
                     <HeartIconFilled />
                     )

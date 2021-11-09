@@ -14,7 +14,7 @@ export function Home () {
 
       setFeeds(data)
     })()
-  }, [])
+  })
 
   if (feeds.length === 0) return <h1>Loading...</h1>
 
