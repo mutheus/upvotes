@@ -1,5 +1,7 @@
 import { ReactComponent as HeartIcon } from './assets/heart-icon.svg'
 import { ReactComponent as LikeIcon } from './assets/like-icon.svg'
+import { ReactComponent as HeartIconFilled } from './assets/heart-icon-filled.svg'
+import { ReactComponent as LikeIconFilled } from './assets/like-icon-filled.svg'
 import BlankUser from 'shared/assets/blank-user.png'
 import { FeedType } from 'feeds'
 import * as S from './styles'
@@ -13,17 +15,25 @@ export function FeedItem ({ feed }: FeedItemProps) {
     <S.FeedItemContainer>
       <S.UserAvatar src={BlankUser} alt='Blank user' />
 
-      <div>
+      <S.UserInfo>
         <S.UserName>@{feed.author.username.replace(/[@.]/g, '')}</S.UserName>
 
-        <p>{feed.content}</p>
+        <S.Content>{feed.content}</S.Content>
 
         <S.CreatedAt>{feed.createdAt}</S.CreatedAt>
 
         <S.Interactions>
           <div>
-            <S.LikeBtn>
-              <LikeIcon />
+            <S.LikeBtn activeUserLikedIt={feed.activeUserLikedIt}>
+              {
+                feed.activeUserLikedIt === 1
+                  ? (
+                    <LikeIconFilled />
+                    )
+                  : (
+                    <LikeIcon />
+                    )
+              }
             </S.LikeBtn>
 
             <span>
@@ -32,8 +42,16 @@ export function FeedItem ({ feed }: FeedItemProps) {
           </div>
 
           <div>
-            <S.LoveBtn>
-              <HeartIcon />
+            <S.LoveBtn activeUserLovedIt={feed.activeUserLovedIt}>
+              {
+                feed.activeUserLovedIt === 1
+                  ? (
+                    <HeartIconFilled />
+                    )
+                  : (
+                    <HeartIcon />
+                    )
+              }
             </S.LoveBtn>
 
             <span>
@@ -41,7 +59,7 @@ export function FeedItem ({ feed }: FeedItemProps) {
             </span>
           </div>
         </S.Interactions>
-      </div>
+      </S.UserInfo>
     </S.FeedItemContainer>
   )
 }

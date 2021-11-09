@@ -8,5 +8,7 @@ declare module 'feeds' {
     likes: number
     loves: number
     createdAt: string
+    activeUserLikedIt: number
+    activeUserLovedIt: number
   }
 }
