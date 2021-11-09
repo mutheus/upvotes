@@ -43,7 +43,7 @@ export function Signup () {
             id='username'
             type='text'
             name='username'
-            placeholder='name@domain.com'
+            placeholder='e.g. name_lastname'
           />
         </FormInputWrapper>
 
