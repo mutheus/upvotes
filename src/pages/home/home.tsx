@@ -26,12 +26,16 @@ export function Home () {
 
   return (
     <S.HomeContainer>
-      <PostFeed />
+      <PostFeed onInteraction={onInteraction} />
 
       <S.FeedWrapper>
         {
           feeds.map((feed: FeedType) => (
-            <FeedItem key={feed.id} feed={feed} onInteraction={onInteraction} />
+            <FeedItem
+              key={feed.id}
+              feed={feed}
+              onInteraction={onInteraction}
+            />
           ))
         }
       </S.FeedWrapper>

@@ -47,7 +47,10 @@ export function FeedItem ({ feed, onInteraction }: FeedItemProps) {
 
         <S.Interactions>
           <div>
-            <S.LikeBtn onClick={() => handleLikeClick(feed.id)} isLikedTrue={isLikedTrue}>
+            <S.LikeBtn
+              onClick={() => handleLikeClick(feed.id)}
+              isLikedTrue={isLikedTrue}
+            >
               {
                 isLikedTrue
                   ? (
@@ -65,7 +68,10 @@ export function FeedItem ({ feed, onInteraction }: FeedItemProps) {
           </div>
 
           <div>
-            <S.LoveBtn onClick={() => handleLoveClick(feed.id)} isLovedTrue={isLovedTrue}>
+            <S.LoveBtn
+              onClick={() => handleLoveClick(feed.id)}
+              isLovedTrue={isLovedTrue}
+            >
               {
                 isLovedTrue
                   ? (

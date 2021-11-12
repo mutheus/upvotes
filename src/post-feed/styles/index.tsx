@@ -1,5 +1,5 @@
 import { Button } from 'shared/styles'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 export const HomeTitle = styled.h1`
   margin-bottom: 1.4em;
@@ -10,7 +10,7 @@ export const UserWrapper = styled.div`
   gap: 2em;
 `
 
-export const TextFieldWrapper = styled.div`
+export const FeedForm = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;

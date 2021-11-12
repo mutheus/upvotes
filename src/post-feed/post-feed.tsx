@@ -1,20 +1,37 @@
 import { AuthContext } from 'contexts/auth-context'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { api } from 'services/api'
 import BlankUser from 'shared/assets/blank-user.png'
 import { ReactComponent as BulbIcon } from './assets/bulb-icon.svg'
 import * as S from './styles'
 
-export function PostFeed () {
+type PostFeedProps = {
+  onInteraction: () => void
+}
+
+export function PostFeed ({ onInteraction }: PostFeedProps) {
   const { setIsAuthenticated } = useContext(AuthContext)
+  const [textAreaValue, setTextAreaValue] = useState('')
   const navigate = useNavigate()
 
   const handleLogoutClick = () => {
     setIsAuthenticated(false)
+
     localStorage.removeItem('token')
+
     api.defaults.headers.common.Authorization = ''
+
     navigate('/login', { replace: true })
+  }
+
+  const handleFeedSubmit = async () => {
+    await api.post('/feed', {
+      content: textAreaValue,
+    })
+
+    setTextAreaValue('')
+    onInteraction()
   }
 
   return (
@@ -26,8 +43,12 @@ export function PostFeed () {
       <S.UserWrapper>
         <S.UserAvatar src={BlankUser} alt='User' />
 
-        <S.TextFieldWrapper>
-          <S.FeedTextArea placeholder='What’s happening?' />
+        <S.FeedForm>
+          <S.FeedTextArea
+            value={textAreaValue}
+            onChange={(e) => setTextAreaValue(e.target.value)}
+            placeholder='What’s happening?'
+          />
 
           <S.FieldFooter>
             <S.HintWrapper>
@@ -36,9 +57,9 @@ export function PostFeed () {
               <S.Hint>Share your thoughts</S.Hint>
             </S.HintWrapper>
 
-            <S.FeedButton>Send to Feed</S.FeedButton>
+            <S.FeedButton onClick={handleFeedSubmit}>Send to Feed</S.FeedButton>
           </S.FieldFooter>
-        </S.TextFieldWrapper>
+        </S.FeedForm>
       </S.UserWrapper>
     </>
   )
