@@ -1,5 +1,5 @@
 import { AuthContext } from 'contexts/auth-context'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { api } from 'services/api'
 import BlankUser from 'shared/assets/blank-user.png'
@@ -14,6 +14,21 @@ export function PostFeed ({ onInteraction }: PostFeedProps) {
   const { setIsAuthenticated } = useContext(AuthContext)
   const [textAreaValue, setTextAreaValue] = useState('')
   const navigate = useNavigate()
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const logoutMenuRef = useRef<HTMLDivElement>(null)
+  const avatarRef = useRef<HTMLImageElement>(null)
+
+  useEffect(() => {
+    document.addEventListener('mousedown', (e) => {
+      if (
+        logoutMenuRef.current &&
+        !logoutMenuRef.current.contains(e.target as Node) &&
+        !avatarRef.current?.contains(e.target as Node)
+      ) {
+        setIsMenuOpen(false)
+      }
+    })
+  }, [])
 
   const handleLogoutClick = () => {
     setIsAuthenticated(false)
@@ -31,17 +46,34 @@ export function PostFeed ({ onInteraction }: PostFeedProps) {
     })
 
     setTextAreaValue('')
+
     onInteraction()
   }
 
   return (
     <>
-      <button onClick={handleLogoutClick}>Log out</button>
-
       <S.HomeTitle>Home</S.HomeTitle>
 
       <S.UserWrapper>
-        <S.UserAvatar src={BlankUser} alt='User' />
+        <S.UserAvatar
+          ref={avatarRef}
+          onClick={() => setIsMenuOpen(open => !open)}
+          src={BlankUser}
+          alt='User'
+        />
+
+        {isMenuOpen && (
+          <S.LogoutMenu ref={logoutMenuRef}>
+            <p>Visit Profile</p>
+            <p>Account Settings</p>
+
+            <S.LogoutButton
+              onClick={handleLogoutClick}
+            >
+              Log out
+            </S.LogoutButton>
+          </S.LogoutMenu>
+        )}
 
         <S.FeedForm>
           <S.FeedTextArea
@@ -57,7 +89,12 @@ export function PostFeed ({ onInteraction }: PostFeedProps) {
               <S.Hint>Share your thoughts</S.Hint>
             </S.HintWrapper>
 
-            <S.FeedButton onClick={handleFeedSubmit}>Send to Feed</S.FeedButton>
+            <S.FeedButton
+              onClick={handleFeedSubmit}
+              disabled={textAreaValue.length === 0 && true}
+            >
+              Send to Feed
+            </S.FeedButton>
           </S.FieldFooter>
         </S.FeedForm>
       </S.UserWrapper>

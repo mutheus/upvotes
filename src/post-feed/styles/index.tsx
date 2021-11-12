@@ -8,6 +8,23 @@ export const HomeTitle = styled.h1`
 export const UserWrapper = styled.div`
   display: flex;
   gap: 2em;
+  position: relative;
+`
+
+export const LogoutMenu = styled.div`
+  position: absolute;
+  left: 0;
+  top: 3em;
+  padding: 1em;
+  background-color: #fff;
+  box-shadow: 0px 10px 50px rgb(0 0 0 / 10%);
+  border-radius: 6px;
+  color: ${({ theme }) => theme.colors.darkGray}
+`
+
+export const LogoutButton = styled(Button)`
+  font-size: 13px;
+  height: 36px;
 `
 
 export const FeedForm = styled.div`
@@ -48,6 +65,7 @@ export const UserAvatar = styled.img`
   height: 42px;
   border-radius: 50%;
   object-fit: cover;
+  cursor: pointer;
 `
 
 export const FeedTextArea = styled.textarea`
@@ -68,4 +86,8 @@ export const FeedTextArea = styled.textarea`
 
 export const FeedButton = styled(Button)`
   border-radius: 100px;
+
+  &:disabled {
+    opacity: .5;
+  }
 `
