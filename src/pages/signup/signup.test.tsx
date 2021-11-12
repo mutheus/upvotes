@@ -14,6 +14,6 @@ describe('First user interaction', () => {
   )
 
   it('Show the form legend', () => {
-    expect(screen.getByRole('heading')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Sign up' })).toBeInTheDocument()
   })
 })
