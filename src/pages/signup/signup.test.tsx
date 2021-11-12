@@ -5,44 +5,39 @@ import { ThemeProvider } from 'styled-components'
 import { theme } from 'resources/theme'
 
 describe('First user interaction', () => {
+  function renderSignupScreen() {
+    render(
+      <ThemeProvider theme={theme}>
+        <MemoryRouter>
+          <Signup />
+        </MemoryRouter>
+      </ThemeProvider>,
+    )
+
+    return {
+      headingEl: screen.getByRole('heading', { name: 'Sign up' }),
+      buttonEl: screen.getByRole('button', { name: 'Sign up' }),
+      linkEl: screen.getByRole('link', { name: 'Sign in' }),
+    }
+  }
+
   describe('When the page loads,', () => {
     it('the form legend is shown', () => {
-      render(
-        <ThemeProvider theme={theme}>
-          <MemoryRouter>
-            <Signup />
-          </MemoryRouter>
-        </ThemeProvider>,
-      )
+      const { headingEl } = renderSignupScreen()
 
-      const headingEl = screen.getByRole('heading', { name: 'Sign up' })
       expect(headingEl).toBeInTheDocument()
     })
 
     it('the sign up button is shown', () => {
-      render(
-        <ThemeProvider theme={theme}>
-          <MemoryRouter>
-            <Signup />
-          </MemoryRouter>
-        </ThemeProvider>,
-      )
+      const { buttonEl } = renderSignupScreen()
 
-      const buttonEl = screen.getByRole('button', { name: 'Sign up' })
       expect(buttonEl).toBeInTheDocument()
     })
 
     it('a sign in link is shown', () => {
-      render(
-        <ThemeProvider theme={theme}>
-          <MemoryRouter>
-            <Signup />
-          </MemoryRouter>
-        </ThemeProvider>,
-      )
+      const { linkEl } = renderSignupScreen()
 
-      const buttonEl = screen.getByRole('link', { name: 'Sign in' })
-      expect(buttonEl).toBeInTheDocument()
+      expect(linkEl).toBeInTheDocument()
     })
   })
 })
