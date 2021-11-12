@@ -1,6 +1,7 @@
 import { AuthContext } from 'contexts/auth-context'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router'
+import { Link } from 'react-router-dom'
 import { api } from 'services/api'
 import BlankUser from 'shared/assets/blank-user.png'
 import { ReactComponent as BulbIcon } from './assets/bulb-icon.svg'
@@ -64,14 +65,15 @@ export function PostFeed ({ onInteraction }: PostFeedProps) {
 
         {isMenuOpen && (
           <S.LogoutMenu ref={logoutMenuRef}>
-            <p>Visit Profile</p>
-            <p>Account Settings</p>
+            <Link to=''>Visit Profile</Link>
+            <Link to=''>Account Settings</Link>
 
-            <S.LogoutButton
+            <Link
+              to='/login'
               onClick={handleLogoutClick}
             >
               Log out
-            </S.LogoutButton>
+            </Link>
           </S.LogoutMenu>
         )}
 

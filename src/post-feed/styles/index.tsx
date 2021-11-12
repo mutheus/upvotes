@@ -15,16 +15,23 @@ export const LogoutMenu = styled.div`
   position: absolute;
   left: 0;
   top: 3em;
-  padding: 1em;
+  padding: 2em;
   background-color: #fff;
   box-shadow: 0px 10px 50px rgb(0 0 0 / 10%);
   border-radius: 6px;
-  color: ${({ theme }) => theme.colors.darkGray}
-`
+  color: ${({ theme }) => theme.colors.darkGray};
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
 
-export const LogoutButton = styled(Button)`
-  font-size: 13px;
-  height: 36px;
+  a {
+    color: inherit;
+    text-decoration: none;
+
+    &:hover {
+      color: ${({ theme }) => theme.colors.text};
+    }
+  }
 `
 
 export const FeedForm = styled.div`

@@ -22,7 +22,7 @@ export function Home () {
     fetchAndSetData()
   }
 
-  if (feeds.length === 0) return <h1>Loading...</h1>
+  if (feeds.length === 0) return <S.Spinner />
 
   return (
     <S.HomeContainer>
