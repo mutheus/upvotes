@@ -5,7 +5,7 @@ import { ThemeProvider } from 'styled-components'
 import { theme } from 'resources/theme'
 
 describe('First user interaction', () => {
-  function renderSignupScreen() {
+  function renderSignupScreen () {
     render(
       <ThemeProvider theme={theme}>
         <MemoryRouter>
