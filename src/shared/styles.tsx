@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Spinner } from 'ui/spinner'
 
 export const Wrapper = styled.div`
   max-width: 20em;
@@ -18,4 +19,19 @@ export const Button = styled.button`
   font-weight: 700;
   color: #FFF;
   font-size: .9rem;
+
+  &:disabled {
+    opacity: .5;
+  }
+
+  &:not(:disabled):hover {
+    opacity: .8;
+  }
+`
+
+export const SpinnerBtn = styled(Spinner)`
+  position: initial;
+  margin: 0;
+  width: 20px;
+  height: 20px;
 `

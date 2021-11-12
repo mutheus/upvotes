@@ -51,5 +51,9 @@ export const FormNotice = styled.p`
   a {
     color: ${({ theme }) => theme.colors.lightPurple};
     font-weight: 700;
+
+    &:hover {
+      color: ${({ theme }) => theme.colors.purple};
+    }
   }
 `

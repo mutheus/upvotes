@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import { api } from 'services/api'
 import {
   Form,
@@ -7,63 +7,92 @@ import {
   FormInputWrapper,
   FormNotice,
 } from 'ui/form-styles'
-import { Wrapper, Button } from 'shared/styles'
+import { Wrapper, Button, SpinnerBtn } from 'shared/styles'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
+import { Alert } from 'alert'
 
 export function Signup () {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [message, setMessage] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setMessage('')
+    }, 2000)
+
+    return () => clearTimeout(timer)
+  }, [message])
 
   const handleSignup = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setIsLoading(true)
 
-    await api.post('/sign-up', {
-      username,
-      password,
-    })
+    try {
+      await api.post('/sign-up', {
+        username,
+        password,
+      })
 
-    navigate('/login')
+      navigate('/login')
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setMessage(err.message)
+      }
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
-    <Wrapper>
-      <Form onSubmit={handleSignup}>
-        <FormTitle>Sign up</FormTitle>
+    <>
+      {message.length > 0 && <Alert message={message} />}
 
-        <FormDesc>Welcome! Join us today creating your account.</FormDesc>
+      <Wrapper>
+        <Form onSubmit={handleSignup}>
+          <FormTitle>Sign up</FormTitle>
 
-        <FormInputWrapper>
-          <label htmlFor='username'>Username:</label>
+          <FormDesc>Welcome! Join us today creating your account.</FormDesc>
 
-          <input
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            id='username'
-            type='text'
-            name='username'
-            placeholder='e.g. name_lastname'
-          />
-        </FormInputWrapper>
+          <FormInputWrapper>
+            <label htmlFor='username'>Username:</label>
 
-        <FormInputWrapper>
-          <label htmlFor='password'>Password:</label>
+            <input
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              id='username'
+              type='text'
+              name='username'
+              placeholder='e.g. name_lastname'
+            />
+          </FormInputWrapper>
 
-          <input
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            id='password'
-            type='password'
-            name='password'
-            placeholder='at least 4 characters'
-          />
-        </FormInputWrapper>
+          <FormInputWrapper>
+            <label htmlFor='password'>Password:</label>
 
-        <Button type='submit'>Sign up</Button>
-      </Form>
+            <input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              id='password'
+              type='password'
+              name='password'
+              placeholder='at least 4 characters'
+            />
+          </FormInputWrapper>
 
-      <FormNotice>Already have an account? <Link to='/login'>Sign in</Link></FormNotice>
-    </Wrapper>
+          <Button
+            disabled={(username.length === 0 || password.length === 0) && true}
+            type='submit'
+          >
+            {isLoading ? <SpinnerBtn /> : 'Sign up'}
+          </Button>
+        </Form>
+
+        <FormNotice>Already have an account? <Link to='/login'>Sign in</Link></FormNotice>
+      </Wrapper>
+    </>
   )
 }

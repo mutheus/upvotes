@@ -76,8 +76,13 @@ export const LoveBtn = styled(Button)<LoveBtnProps>`${({ isLovedTrue, theme }) =
 
 export const LikeBtn = styled(Button)<LikeBtnProps>`${({ isLikedTrue, theme }) => css`
   svg {
+    width: 26px;
+    height: 26px;
+
     path {
       fill: ${isLikedTrue ? theme.colors.purple : theme.colors.text};
+      stroke: ${isLikedTrue ? 'none' : theme.colors.text};
+      stroke-width: .3;
     }
   }
 `}`

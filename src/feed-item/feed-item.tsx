@@ -6,6 +6,8 @@ import BlankUser from 'shared/assets/blank-user.png'
 import { FeedType } from 'feeds'
 import * as S from './styles'
 import { api } from 'services/api'
+import { useEffect, useState } from 'react'
+import { Alert } from 'alert'
 
 type FeedItemProps = {
   feed: FeedType
@@ -13,82 +15,107 @@ type FeedItemProps = {
 }
 
 export function FeedItem ({ feed, onInteraction }: FeedItemProps) {
+  const [message, setMessage] = useState('')
   const isLikedTrue = !!feed.activeUserLikedIt
   const isLovedTrue = !!feed.activeUserLovedIt
 
-  const handleLikeClick = async (id: number) => {
-    await api.post('/reaction', {
-      feedId: id,
-      like: !isLikedTrue,
-    })
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setMessage('')
+    }, 2000)
 
-    onInteraction()
+    return () => clearTimeout(timer)
+  }, [message])
+
+  const handleLikeClick = async (id: number) => {
+    try {
+      await api.post('/reaction', {
+        feedId: id,
+        like: !isLikedTrue,
+      })
+
+      onInteraction()
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setMessage(err.message)
+      }
+    }
   }
 
   const handleLoveClick = async (id: number) => {
-    await api.post('/reaction', {
-      feedId: id,
-      love: !isLovedTrue,
-    })
+    try {
+      await api.post('/reaction', {
+        feedId: id,
+        love: !isLovedTrue,
+      })
 
-    onInteraction()
+      onInteraction()
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setMessage(err.message)
+      }
+    }
   }
 
   return (
-    <S.FeedItemContainer>
-      <S.UserAvatar src={BlankUser} alt='Blank user' />
+    <>
+      {message.length > 0 && <Alert message={message} />}
 
-      <S.UserInfo>
-        <S.UserName>@{feed.author.username.replace(/[@.]/g, '')}</S.UserName>
+      <S.FeedItemContainer>
+        <S.UserAvatar src={BlankUser} alt='Blank user' />
 
-        <S.Content>{feed.content}</S.Content>
+        <S.UserInfo>
+          <S.UserName>@{feed.author.username.replace(/[@.]/g, '')}</S.UserName>
 
-        <S.CreatedAt>{feed.createdAt}</S.CreatedAt>
+          <S.Content>{feed.content}</S.Content>
 
-        <S.Interactions>
-          <div>
-            <S.LikeBtn
-              onClick={() => handleLikeClick(feed.id)}
-              isLikedTrue={isLikedTrue}
-            >
-              {
-                isLikedTrue
-                  ? (
-                    <LikeIconFilled />
-                    )
-                  : (
-                    <LikeIcon />
-                    )
-              }
-            </S.LikeBtn>
+          <S.CreatedAt>{feed.createdAt}</S.CreatedAt>
 
-            <span>
-              {feed.likes > 1 ? `${feed.likes} Likes` : `${feed.likes} Like`}
-            </span>
-          </div>
+          <S.Interactions>
+            <div>
+              <S.LikeBtn
+                onClick={() => handleLikeClick(feed.id)}
+                isLikedTrue={isLikedTrue}
+              >
+                {
+                  isLikedTrue
+                    ? (
+                      <LikeIconFilled />
+                      )
+                    : (
+                      <LikeIcon />
+                      )
+                }
+              </S.LikeBtn>
 
-          <div>
-            <S.LoveBtn
-              onClick={() => handleLoveClick(feed.id)}
-              isLovedTrue={isLovedTrue}
-            >
-              {
-                isLovedTrue
-                  ? (
-                    <HeartIconFilled />
-                    )
-                  : (
-                    <HeartIcon />
-                    )
-              }
-            </S.LoveBtn>
+              <span>
+                {feed.likes > 1 ? `${feed.likes} Likes` : `${feed.likes} Like`}
+              </span>
+            </div>
 
-            <span>
-              {feed.loves > 1 ? `${feed.loves} Loves` : `${feed.loves} Love`}
-            </span>
-          </div>
-        </S.Interactions>
-      </S.UserInfo>
-    </S.FeedItemContainer>
+            <div>
+              <S.LoveBtn
+                onClick={() => handleLoveClick(feed.id)}
+                isLovedTrue={isLovedTrue}
+              >
+                {
+                  isLovedTrue
+                    ? (
+                      <HeartIconFilled />
+                      )
+                    : (
+                      <HeartIcon />
+                      )
+                }
+              </S.LoveBtn>
+
+              <span>
+                {feed.loves > 1 ? `${feed.loves} Loves` : `${feed.loves} Love`}
+              </span>
+            </div>
+          </S.Interactions>
+        </S.UserInfo>
+      </S.FeedItemContainer>
+    </>
   )
 }
