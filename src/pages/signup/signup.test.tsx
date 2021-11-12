@@ -5,15 +5,44 @@ import { ThemeProvider } from 'styled-components'
 import { theme } from 'resources/theme'
 
 describe('First user interaction', () => {
-  render(
-    <ThemeProvider theme={theme}>
-      <MemoryRouter>
-        <Signup />
-      </MemoryRouter>
-    </ThemeProvider>,
-  )
+  describe('When the page loads,', () => {
+    it('the form legend is shown', () => {
+      render(
+        <ThemeProvider theme={theme}>
+          <MemoryRouter>
+            <Signup />
+          </MemoryRouter>
+        </ThemeProvider>,
+      )
 
-  it('Show the form legend', () => {
-    expect(screen.getByRole('heading', { name: 'Sign up' })).toBeInTheDocument()
+      const headingEl = screen.getByRole('heading', { name: 'Sign up' })
+      expect(headingEl).toBeInTheDocument()
+    })
+
+    it('the sign up button is shown', () => {
+      render(
+        <ThemeProvider theme={theme}>
+          <MemoryRouter>
+            <Signup />
+          </MemoryRouter>
+        </ThemeProvider>,
+      )
+
+      const buttonEl = screen.getByRole('button', { name: 'Sign up' })
+      expect(buttonEl).toBeInTheDocument()
+    })
+
+    it('a sign in link is shown', () => {
+      render(
+        <ThemeProvider theme={theme}>
+          <MemoryRouter>
+            <Signup />
+          </MemoryRouter>
+        </ThemeProvider>,
+      )
+
+      const buttonEl = screen.getByRole('link', { name: 'Sign in' })
+      expect(buttonEl).toBeInTheDocument()
+    })
   })
 })
