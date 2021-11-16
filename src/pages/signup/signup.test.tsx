@@ -3,6 +3,7 @@ import { Signup } from './signup'
 import { MemoryRouter } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 import { theme } from 'resources/theme'
+import { disableFormButton } from 'services/utils'
 
 describe('First user interaction', () => {
   function renderSignupScreen () {
@@ -38,6 +39,14 @@ describe('First user interaction', () => {
       const { linkEl } = renderSignupScreen()
 
       expect(linkEl).toBeInTheDocument()
+    })
+  })
+
+  describe('When the form shows up,', () => {
+    it('the user fills the form', () => {
+      expect(disableFormButton(3, 3)).toBeUndefined()
+      expect(disableFormButton(2, 3)).toBeTruthy()
+      expect(disableFormButton(3, 2)).toBeTruthy()
     })
   })
 })

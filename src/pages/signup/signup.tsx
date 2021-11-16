@@ -11,6 +11,7 @@ import { Wrapper, Button, SpinnerBtn } from 'shared/styles'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import { Alert } from 'alert'
+import { disableFormButton } from 'services/utils'
 
 export function Signup () {
   const [username, setUsername] = useState('')
@@ -79,12 +80,12 @@ export function Signup () {
               id='password'
               type='password'
               name='password'
-              placeholder='at least 4 characters'
+              placeholder='at least 3 characters'
             />
           </FormInputWrapper>
 
           <Button
-            disabled={(username.length === 0 || password.length === 0) && true}
+            disabled={disableFormButton(username.length, password.length)}
             type='submit'
           >
             {isLoading ? <SpinnerBtn /> : 'Sign up'}
