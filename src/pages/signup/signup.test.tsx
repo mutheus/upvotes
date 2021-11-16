@@ -43,10 +43,11 @@ describe('First user interaction', () => {
   })
 
   describe('When the form shows up,', () => {
-    it('the user fills the form', () => {
-      expect(disableFormButton(3, 3)).toBeUndefined()
-      expect(disableFormButton(2, 3)).toBeTruthy()
-      expect(disableFormButton(3, 2)).toBeTruthy()
+    it('the submit button is disabled', () => {
+      const usernameLength = 0
+      const passwordLength = 0
+
+      expect(disableFormButton(usernameLength, passwordLength)).toBeTruthy()
     })
   })
 })
