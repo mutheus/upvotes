@@ -44,8 +44,14 @@ describe('First user interaction', () => {
 
   describe('When the form shows up,', () => {
     it('the submit button is disabled', () => {
-      const usernameLength = 0
-      const passwordLength = 0
+      const { buttonEl } = renderSignupScreen()
+
+      expect(buttonEl).toBeDisabled()
+    })
+
+    it('at least three characters is required to enable the submit button', () => {
+      const usernameLength = 3
+      const passwordLength = 2
 
       expect(disableFormButton(usernameLength, passwordLength)).toBeTruthy()
     })
