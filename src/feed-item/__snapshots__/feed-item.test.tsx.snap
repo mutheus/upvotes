@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Feed item component The component´s snapshot should exactly match 1`] = `
+<div
+  class="styles__FeedItemContainer-sc-7qcfq9-0 kAZUJW"
+>
+  <img
+    alt="Blank user"
+    class="styles__UserAvatar-sc-7qcfq9-1 hZyoWT"
+    src="blank-user.png"
+  />
+  <div
+    class="styles__UserInfo-sc-7qcfq9-2 bxOBm"
+  >
+    <p
+      class="styles__UserName-sc-7qcfq9-4 efiVYU"
+    >
+      @
+      jõao
+    </p>
+    <p
+      class="styles__Content-sc-7qcfq9-3 pbAKq"
+    >
+      A test
+    </p>
+    <p
+      class="styles__CreatedAt-sc-7qcfq9-5 QryjS"
+    >
+      2021-11-12T18:22:12.720Z
+    </p>
+    <div
+      class="styles__Interactions-sc-7qcfq9-6 hODGcT"
+    >
+      <div>
+        <button
+          class="styles__Button-sc-7qcfq9-7 styles__LikeBtn-sc-7qcfq9-9 fFRPLU gyeqku"
+        >
+          <svg>
+            like-icon.svg
+          </svg>
+        </button>
+        <span>
+          2 Likes
+        </span>
+      </div>
+      <div>
+        <button
+          class="styles__Button-sc-7qcfq9-7 styles__LoveBtn-sc-7qcfq9-8 fFRPLU bBwDcX"
+        >
+          <svg>
+            heart-icon-filled.svg
+          </svg>
+        </button>
+        <span>
+          1 Love
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;
