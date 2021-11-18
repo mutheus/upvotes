@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import { Signup } from './signup'
 import { MemoryRouter } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
@@ -19,6 +19,8 @@ describe('First user interaction', () => {
       headingEl: screen.getByRole('heading', { name: 'Sign up' }),
       buttonEl: screen.getByRole('button', { name: 'Sign up' }),
       linkEl: screen.getByRole('link', { name: 'Sign in' }),
+      inputUsernameEl: screen.getByRole('textbox', { name: 'Username:' }),
+      inputPasswordEl: screen.getByLabelText('Password:'),
     }
   }
 
@@ -56,6 +58,13 @@ describe('First user interaction', () => {
       expect(disableFormButton(usernameLength[0], passwordLength[0])).toBeUndefined()
       expect(disableFormButton(usernameLength[1], passwordLength[1])).toBeTruthy()
       expect(disableFormButton(usernameLength[2], passwordLength[2])).toBeTruthy()
+    })
+
+    it('the user can create an account', () => {
+      const { inputUsernameEl, inputPasswordEl, buttonEl } = renderSignupScreen()
+      fireEvent.change(inputUsernameEl, { target: { value: 'test1' } })
+      fireEvent.change(inputPasswordEl, { target: { value: '1234' } })
+      fireEvent.click(buttonEl)
     })
   })
 })
