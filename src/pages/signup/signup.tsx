@@ -85,7 +85,7 @@ export function Signup () {
           </FormInputWrapper>
 
           <Button
-            disabled={disableFormButton(username.length, password.length)}
+            {...disableFormButton(username.length, password.length)}
             type='submit'
           >
             {isLoading ? <SpinnerBtn /> : 'Sign up'}

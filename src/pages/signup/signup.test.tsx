@@ -3,7 +3,6 @@ import { Signup } from './signup'
 import { MemoryRouter } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 import { theme } from 'resources/theme'
-import { disableFormButton } from 'services/utils'
 
 describe('First user interaction', () => {
   function renderSignupScreen () {
@@ -52,15 +51,18 @@ describe('First user interaction', () => {
     })
 
     it('at least three characters is required to enable the submit button', () => {
-      const { buttonEl } = renderSignupScreen()
-      const usernameLength = [3, 2, 3]
-      const passwordLength = [3, 3, 2]
+      const { inputUsernameEl, inputPasswordEl, buttonEl } = renderSignupScreen()
 
-      expect(disableFormButton(usernameLength[0], passwordLength[0])).toBeUndefined()
-      expect(buttonEl).toHaveAttribute('disabled', '')
-      expect(disableFormButton(usernameLength[1], passwordLength[1])).toBeTruthy()
+      fireEvent.change(inputUsernameEl, { target: { value: 'ggg' } })
+      fireEvent.change(inputPasswordEl, { target: { value: '123' } })
+      expect(buttonEl).not.toHaveAttribute('disabled')
+
+      fireEvent.change(inputUsernameEl, { target: { value: 'ggg' } })
+      fireEvent.change(inputPasswordEl, { target: { value: '12' } })
       expect(buttonEl).toHaveAttribute('disabled')
-      expect(disableFormButton(usernameLength[2], passwordLength[2])).toBeTruthy()
+
+      fireEvent.change(inputUsernameEl, { target: { value: 'gg' } })
+      fireEvent.change(inputPasswordEl, { target: { value: '123' } })
       expect(buttonEl).toHaveAttribute('disabled')
     })
 
