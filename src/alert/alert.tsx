@@ -1,15 +1,20 @@
-import styled from 'styled-components'
+import { ResultType } from 'feeds'
+import styled, { css } from 'styled-components'
 
 type AlertProps = {
-  message: string
+  result: ResultType
 }
 
-const ErrorWrapper = styled.div`
+type AlertWrapperProps = {
+  type?: string
+}
+
+const AlertWrapper = styled.div<AlertWrapperProps>`${({ type, theme }) => css`
   position: fixed;
   top: 2%;
   left: 50%;
   transform: translateX(-50%);
-  background-color: ${({ theme }) => theme.colors.lightPurple};
+  background-color: ${type === 'success' ? theme.colors.lightPurple : theme.colors.error};
   color: #fff;
   padding: 1em 2em;
   border-radius: 6px;
@@ -19,12 +24,12 @@ const ErrorWrapper = styled.div`
   p {
     margin: 0;
   }
-`
+`}`
 
-export function Alert ({ message }: AlertProps) {
+export function Alert ({ result }: AlertProps) {
   return (
-    <ErrorWrapper>
-      <p>{message}</p>
-    </ErrorWrapper>
+    <AlertWrapper type={result.type}>
+      <p>{result.message}</p>
+    </AlertWrapper>
   )
 }

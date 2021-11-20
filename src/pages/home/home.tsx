@@ -6,10 +6,11 @@ import { FeedItem } from 'feed-item'
 import { FeedType } from 'feeds'
 import { Alert } from 'alert'
 import { Spinner } from 'ui/spinner'
+import { isObjEmpty } from 'services/utils'
 
 export function Home () {
   const [feeds, setFeeds] = useState([])
-  const [message, setMessage] = useState('')
+  const [result, setResult] = useState({})
 
   const fetchAndSetData = useCallback(async () => {
     try {
@@ -18,7 +19,7 @@ export function Home () {
       setFeeds(data)
     } catch (err: unknown) {
       if (err instanceof Error) {
-        setMessage(err.message)
+        setResult({ type: 'error', message: 'Something went wrong' })
       }
     }
   }, [])
@@ -29,11 +30,11 @@ export function Home () {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setMessage('')
+      setResult({})
     }, 2000)
 
     return () => clearTimeout(timer)
-  }, [message])
+  }, [result])
 
   const onInteraction = () => {
     fetchAndSetData()
@@ -43,7 +44,7 @@ export function Home () {
 
   return (
     <>
-      {message.length > 0 && <Alert message={message} />}
+      {!isObjEmpty(result) && <Alert result={result} />}
 
       <S.HomeContainer>
         <PostFeed onInteraction={onInteraction} />

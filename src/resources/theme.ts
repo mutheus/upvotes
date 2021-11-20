@@ -7,5 +7,6 @@ export const theme: DefaultTheme = {
     text: '#3E3E3E',
     gray: '#C7C7C7',
     darkGray: '#8a8a8a',
+    error: '#f74b55',
   },
 }

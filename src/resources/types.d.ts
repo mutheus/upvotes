@@ -11,4 +11,9 @@ declare module 'feeds' {
     activeUserLikedIt: number
     activeUserLovedIt: number
   }
+
+  export type ResultType = {
+    type?: string
+    message?: string
+  }
 }

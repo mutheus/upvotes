@@ -6,6 +6,7 @@ declare module 'styled-components' {
       text: string
       gray: string
       darkGray: string
+      error: string
     }
   }
 }

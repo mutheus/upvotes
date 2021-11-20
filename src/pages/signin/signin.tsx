@@ -17,22 +17,23 @@ import { AuthContext } from 'contexts/auth-context'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import { Alert } from 'alert'
+import { isObjEmpty } from 'services/utils'
 
 export function Signin () {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const { setIsAuthenticated } = useContext(AuthContext)
   const navigate = useNavigate()
-  const [message, setMessage] = useState('')
+  const [result, setResult] = useState({})
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setMessage('')
+      setResult({})
     }, 2000)
 
     return () => clearTimeout(timer)
-  }, [message])
+  }, [result])
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -54,12 +55,12 @@ export function Signin () {
     } catch (err: unknown) {
       if (err instanceof Error) {
         if (err.message.includes('401')) {
-          setMessage('Incorrect username or password')
+          setResult('Incorrect username or password')
 
           return
         }
 
-        setMessage(err.message)
+        setResult({ type: 'error', message: 'Something went wrong' })
       }
     } finally {
       setIsLoading(false)
@@ -68,7 +69,7 @@ export function Signin () {
 
   return (
     <>
-      {message.length > 0 && <Alert message={message} />}
+      {!isObjEmpty(result) && <Alert result={result} />}
 
       <Wrapper>
         <Form onSubmit={handleLogin}>

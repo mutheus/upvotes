@@ -8,6 +8,7 @@ import * as S from './styles'
 import { api } from 'services/api'
 import { useEffect, useState } from 'react'
 import { Alert } from 'alert'
+import { isObjEmpty } from 'services/utils'
 
 type FeedItemProps = {
   feed: FeedType
@@ -15,17 +16,17 @@ type FeedItemProps = {
 }
 
 export function FeedItem ({ feed, onInteraction }: FeedItemProps) {
-  const [message, setMessage] = useState('')
+  const [result, setResult] = useState({})
   const isLikedTrue = !!feed.activeUserLikedIt
   const isLovedTrue = !!feed.activeUserLovedIt
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setMessage('')
+      setResult({})
     }, 2000)
 
     return () => clearTimeout(timer)
-  }, [message])
+  }, [result])
 
   const handleLikeClick = async (id: number) => {
     try {
@@ -37,7 +38,7 @@ export function FeedItem ({ feed, onInteraction }: FeedItemProps) {
       onInteraction()
     } catch (err: unknown) {
       if (err instanceof Error) {
-        setMessage(err.message)
+        setResult({ type: 'error', message: 'Something went wrong' })
       }
     }
   }
@@ -52,14 +53,14 @@ export function FeedItem ({ feed, onInteraction }: FeedItemProps) {
       onInteraction()
     } catch (err: unknown) {
       if (err instanceof Error) {
-        setMessage(err.message)
+        setResult({ type: 'error', message: 'Something went wrong' })
       }
     }
   }
 
   return (
     <>
-      {message.length > 0 && <Alert message={message} />}
+      {!isObjEmpty(result) && <Alert result={result} />}
 
       <S.FeedItemContainer>
         <S.UserAvatar src={BlankUser} alt='Blank user' />

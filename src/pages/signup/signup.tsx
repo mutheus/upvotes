@@ -11,22 +11,23 @@ import { Wrapper, Button, SpinnerBtn } from 'shared/styles'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import { Alert } from 'alert'
-import { disableFormButton } from 'services/utils'
+import { disableFormButton, isObjEmpty } from 'services/utils'
+import { ResultType } from 'feeds'
 
 export function Signup () {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [message, setMessage] = useState('')
+  const [result, setResult] = useState<ResultType>({})
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setMessage('')
+      setResult({})
     }, 2000)
 
     return () => clearTimeout(timer)
-  }, [message])
+  }, [result])
 
   const handleSignup = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -38,10 +39,14 @@ export function Signup () {
         password,
       })
 
-      navigate('/login')
+      setResult({ type: 'success', message: 'Well done! Now you can log in' })
+
+      setTimeout(() => {
+        navigate('/login')
+      }, 2000)
     } catch (err: unknown) {
       if (err instanceof Error) {
-        setMessage(err.message)
+        setResult({ type: 'error', message: 'Something went wrong' })
       }
     } finally {
       setIsLoading(false)
@@ -50,7 +55,7 @@ export function Signup () {
 
   return (
     <>
-      {message.length > 0 && <Alert message={message} />}
+      {!isObjEmpty(result) && <Alert result={result} />}
 
       <Wrapper>
         <Form onSubmit={handleSignup}>
