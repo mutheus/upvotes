@@ -52,12 +52,16 @@ describe('First user interaction', () => {
     })
 
     it('at least three characters is required to enable the submit button', () => {
+      const { buttonEl } = renderSignupScreen()
       const usernameLength = [3, 2, 3]
       const passwordLength = [3, 3, 2]
 
       expect(disableFormButton(usernameLength[0], passwordLength[0])).toBeUndefined()
+      expect(buttonEl).toHaveAttribute('disabled', '')
       expect(disableFormButton(usernameLength[1], passwordLength[1])).toBeTruthy()
+      expect(buttonEl).toHaveAttribute('disabled')
       expect(disableFormButton(usernameLength[2], passwordLength[2])).toBeTruthy()
+      expect(buttonEl).toHaveAttribute('disabled')
     })
 
     it('the user can create an account', () => {
