@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { api } from 'services/api'
 import {
   Form,
@@ -12,22 +12,14 @@ import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import { Alert } from 'alert'
 import { disableFormButton, isObjEmpty } from 'services/utils'
-import { ResultType } from 'feeds'
+import useRequestMessage from 'hooks/useRequestMessage'
 
 export function Signup () {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [result, setResult] = useState<ResultType>({})
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setResult({})
-    }, 2000)
-
-    return () => clearTimeout(timer)
-  }, [result])
+  const [requestResult, setRequestResult] = useRequestMessage()
 
   const handleSignup = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -39,14 +31,14 @@ export function Signup () {
         password,
       })
 
-      setResult({ type: 'success', message: 'Well done! Now you can log in' })
+      setRequestResult({ type: 'success', message: 'Well done! Now you can log in' })
 
       setTimeout(() => {
         navigate('/login')
       }, 2000)
     } catch (err: unknown) {
       if (err instanceof Error) {
-        setResult({ type: 'error', message: 'Something went wrong' })
+        setRequestResult({ type: 'error', message: 'Something went wrong' })
       }
     } finally {
       setIsLoading(false)
@@ -55,7 +47,7 @@ export function Signup () {
 
   return (
     <>
-      {!isObjEmpty(result) && <Alert result={result} />}
+      {!isObjEmpty(requestResult) && <Alert result={requestResult} />}
 
       <Wrapper>
         <Form onSubmit={handleSignup}>
