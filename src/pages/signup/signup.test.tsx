@@ -3,6 +3,22 @@ import { Signup } from './signup'
 import { MemoryRouter } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 import { theme } from 'resources/theme'
+import { rest } from 'msw'
+import { setupServer } from 'msw/node'
+
+const url = 'https://segware-book-api.segware.io/api/sign-up'
+
+const signupRequest = rest.post(url, (req, res, ctx) => {
+  return res(ctx.json({ success: true }))
+})
+
+const handlers = [signupRequest]
+
+const server = setupServer(...handlers)
+
+beforeAll(() => server.listen())
+afterEach(() => server.resetHandlers())
+afterAll(() => server.close())
 
 describe('First user interaction', () => {
   function renderSignupScreen () {
@@ -24,19 +40,19 @@ describe('First user interaction', () => {
   }
 
   describe('When the page loads,', () => {
-    it('the form legend is shown', () => {
+    test('the form legend is shown', () => {
       const { headingEl } = renderSignupScreen()
 
       expect(headingEl).toBeInTheDocument()
     })
 
-    it('the sign up button is shown', () => {
+    test('the sign up button is shown', () => {
       const { buttonEl } = renderSignupScreen()
 
       expect(buttonEl).toBeInTheDocument()
     })
 
-    it('a sign in link is shown', () => {
+    test('a sign in link is shown', () => {
       const { linkEl } = renderSignupScreen()
 
       expect(linkEl).toBeInTheDocument()
@@ -44,13 +60,13 @@ describe('First user interaction', () => {
   })
 
   describe('When the form shows up,', () => {
-    it('the submit button is disabled', () => {
+    test('the submtest button is disabled', () => {
       const { buttonEl } = renderSignupScreen()
 
       expect(buttonEl).toBeDisabled()
     })
 
-    it('at least three characters is required to enable the submit button', () => {
+    test('at least three characters is required to enable the submtest button', () => {
       const { inputUsernameEl, inputPasswordEl, buttonEl } = renderSignupScreen()
 
       fireEvent.change(inputUsernameEl, { target: { value: 'ggg' } })
@@ -66,11 +82,16 @@ describe('First user interaction', () => {
       expect(buttonEl).toHaveAttribute('disabled')
     })
 
-    it('the user can create an account', () => {
+    test('the user can create an account', async () => {
       const { inputUsernameEl, inputPasswordEl, buttonEl } = renderSignupScreen()
+
       fireEvent.change(inputUsernameEl, { target: { value: 'test1' } })
       fireEvent.change(inputPasswordEl, { target: { value: '1234' } })
       fireEvent.click(buttonEl)
+
+      const message = await screen.findByText('Well done! Now you can log in')
+
+      expect(message).toBeInTheDocument()
     })
   })
 })
