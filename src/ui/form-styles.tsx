@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro'
 
-export const Form = styled.form`
+export const FormEl = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1em;

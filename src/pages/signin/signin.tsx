@@ -5,7 +5,7 @@ import {
 } from 'react'
 import { api } from 'services/api'
 import {
-  Form,
+  FormEl,
   FormTitle,
   FormDesc,
   FormInputWrapper,
@@ -64,7 +64,7 @@ export function Signin () {
       {!isObjEmpty(requestResult) && <Alert result={requestResult} />}
 
       <Wrapper>
-        <Form onSubmit={handleLogin}>
+        <FormEl onSubmit={handleLogin}>
           <FormTitle>Login</FormTitle>
 
           <FormDesc>Welcome back! Please login to your account.</FormDesc>
@@ -101,7 +101,7 @@ export function Signin () {
           >
             {isLoading ? <SpinnerBtn /> : 'Login'}
           </Button>
-        </Form>
+        </FormEl>
 
         <FormNotice>Don’t have an account? <Link to='/'>Sign up</Link></FormNotice>
       </Wrapper>

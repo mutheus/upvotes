@@ -1,18 +1,11 @@
 import { FormEvent, useState } from 'react'
 import { api } from 'services/api'
-import {
-  Form,
-  FormTitle,
-  FormDesc,
-  FormInputWrapper,
-  FormNotice,
-} from 'ui/form-styles'
-import { Wrapper, Button, SpinnerBtn } from 'shared/styles'
+import { Wrapper } from 'shared/styles'
 import { useNavigate } from 'react-router'
-import { Link } from 'react-router-dom'
 import { Alert } from 'alert'
-import { disableFormButton, isObjEmpty } from 'services/utils'
+import { isObjEmpty } from 'services/utils'
 import useRequestMessage from 'hooks/useRequestMessage'
+import { Form } from 'form'
 
 export function Signup () {
   const [username, setUsername] = useState('')
@@ -45,51 +38,36 @@ export function Signup () {
     }
   }
 
+  const handleUsernameChange = (value: string) => {
+    setUsername(value)
+  }
+
+  const handlePasswordChange = (value: string) => {
+    setPassword(value)
+  }
+
   return (
     <>
       {!isObjEmpty(requestResult) && <Alert result={requestResult} />}
 
       <Wrapper>
-        <Form onSubmit={handleSignup}>
-          <FormTitle>Sign up</FormTitle>
-
-          <FormDesc>Welcome! Join us today creating your account.</FormDesc>
-
-          <FormInputWrapper>
-            <label htmlFor='username'>Username:</label>
-
-            <input
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              id='username'
-              type='text'
-              name='username'
-              placeholder='e.g. name_lastname'
-            />
-          </FormInputWrapper>
-
-          <FormInputWrapper>
-            <label htmlFor='password'>Password:</label>
-
-            <input
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              id='password'
-              type='password'
-              name='password'
-              placeholder='at least 3 characters'
-            />
-          </FormInputWrapper>
-
-          <Button
-            {...disableFormButton(username.length, password.length)}
-            type='submit'
-          >
-            {isLoading ? <SpinnerBtn /> : 'Sign up'}
-          </Button>
-        </Form>
-
-        <FormNotice>Already have an account? <Link to='/login'>Sign in</Link></FormNotice>
+        <Form
+          username={username}
+          password={password}
+          isLoading={isLoading}
+          handleUsernameChange={handleUsernameChange}
+          handlePasswordChange={handlePasswordChange}
+          handleSubmit={handleSignup}
+          title='Sign up'
+          description='Welcome! Join us today creating your account.'
+          notice={
+            {
+              text: 'Already have an account?',
+              to: 'Sign in',
+              path: '/login',
+            }
+          }
+        />
       </Wrapper>
     </>
   )
