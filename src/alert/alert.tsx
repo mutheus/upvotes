@@ -6,15 +6,15 @@ type AlertProps = {
 }
 
 type AlertWrapperProps = {
-  type?: string
+  statusType?: string
 }
 
-const AlertWrapper = styled.div<AlertWrapperProps>`${({ type, theme }) => css`
+const AlertWrapper = styled.div<AlertWrapperProps>`${({ statusType, theme }) => css`
   position: fixed;
   top: 2%;
   left: 50%;
   transform: translateX(-50%);
-  background-color: ${type === 'success' ? theme.colors.lightPurple : theme.colors.error};
+  background-color: ${statusType === 'success' ? theme.colors.lightPurple : theme.colors.error};
   color: #fff;
   padding: 1em 2em;
   border-radius: 6px;
@@ -28,7 +28,7 @@ const AlertWrapper = styled.div<AlertWrapperProps>`${({ type, theme }) => css`
 
 export function Alert ({ result }: AlertProps) {
   return (
-    <AlertWrapper type={result.type}>
+    <AlertWrapper statusType={result.type}>
       <p>{result.message}</p>
     </AlertWrapper>
   )

@@ -2,38 +2,38 @@
 
 exports[`Feed item component The component´s snapshot should exactly match 1`] = `
 <div
-  class="styles__FeedItemContainer-sc-7qcfq9-0 kAZUJW"
+  class="sc-bdvvtL iJtKIV"
 >
   <img
     alt="Blank user"
-    class="styles__UserAvatar-sc-7qcfq9-1 hZyoWT"
+    class="sc-gsDKAQ iirgEA"
     src="blank-user.png"
   />
   <div
-    class="styles__UserInfo-sc-7qcfq9-2 bxOBm"
+    class="sc-dkPtRN hUnxIf"
   >
     <p
-      class="styles__UserName-sc-7qcfq9-4 efiVYU"
+      class="sc-eCImPb cZwBKB"
     >
       @
       jõao
     </p>
     <p
-      class="styles__Content-sc-7qcfq9-3 pbAKq"
+      class="sc-hKwDye MUMnp"
     >
       A test
     </p>
     <p
-      class="styles__CreatedAt-sc-7qcfq9-5 QryjS"
+      class="sc-jRQBWg kXWXTQ"
     >
       2021-11-12T18:22:12.720Z
     </p>
     <div
-      class="styles__Interactions-sc-7qcfq9-6 hODGcT"
+      class="sc-gKclnd ljuhmM"
     >
       <div>
         <button
-          class="styles__Button-sc-7qcfq9-7 styles__LikeBtn-sc-7qcfq9-9 fFRPLU gyeqku"
+          class="sc-iCfMLu sc-pVTFL hLUYxi dVdvxL"
         >
           <svg>
             like-icon.svg
@@ -45,7 +45,7 @@ exports[`Feed item component The component´s snapshot should exactly match 1`] 
       </div>
       <div>
         <button
-          class="styles__Button-sc-7qcfq9-7 styles__LoveBtn-sc-7qcfq9-8 fFRPLU bBwDcX"
+          class="sc-iCfMLu sc-furwcr hLUYxi hEBSVL"
         >
           <svg>
             heart-icon-filled.svg

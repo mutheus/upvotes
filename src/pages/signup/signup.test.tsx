@@ -12,6 +12,10 @@ const signupRequest = rest.post(url, (req, res, ctx) => {
   return res(ctx.json({ success: true }))
 })
 
+const signupRequestError = rest.post(url, (req, res, ctx) => {
+  return res(ctx.status(402))
+})
+
 const handlers = [signupRequest]
 
 const server = setupServer(...handlers)
@@ -60,13 +64,13 @@ describe('First user interaction', () => {
   })
 
   describe('When the form shows up,', () => {
-    test('the submtest button is disabled', () => {
+    test('the submit button is disabled', () => {
       const { buttonEl } = renderSignupScreen()
 
       expect(buttonEl).toBeDisabled()
     })
 
-    test('at least three characters is required to enable the submtest button', () => {
+    test('at least three characters is required to enable the submit button', () => {
       const { inputUsernameEl, inputPasswordEl, buttonEl } = renderSignupScreen()
 
       fireEvent.change(inputUsernameEl, { target: { value: 'ggg' } })
@@ -90,6 +94,19 @@ describe('First user interaction', () => {
       fireEvent.click(buttonEl)
 
       const message = await screen.findByText('Well done! Now you can log in')
+
+      expect(message).toBeInTheDocument()
+    })
+
+    test('the request to create an account fails', async () => {
+      const { inputUsernameEl, inputPasswordEl, buttonEl } = renderSignupScreen()
+      server.use(signupRequestError)
+
+      fireEvent.change(inputUsernameEl, { target: { value: 'test1' } })
+      fireEvent.change(inputPasswordEl, { target: { value: '1234' } })
+      fireEvent.click(buttonEl)
+
+      const message = await screen.findByText('Something went wrong')
 
       expect(message).toBeInTheDocument()
     })
