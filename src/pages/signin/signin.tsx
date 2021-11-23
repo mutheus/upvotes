@@ -4,20 +4,14 @@ import {
   useContext,
 } from 'react'
 import { api } from 'services/api'
-import {
-  FormEl,
-  FormTitle,
-  FormDesc,
-  FormInputWrapper,
-  FormNotice,
-} from 'ui/form-styles'
-import { Wrapper, Button, SpinnerBtn } from 'shared/styles'
+
+import { Wrapper } from 'shared/styles'
 import { AuthContext } from 'contexts/auth-context'
 import { useNavigate } from 'react-router'
-import { Link } from 'react-router-dom'
 import { Alert } from 'alert'
 import { isObjEmpty } from 'services/utils'
 import useRequestMessage from 'hooks/useRequestMessage'
+import { Form } from 'form'
 
 export function Signin () {
   const [username, setUsername] = useState('')
@@ -59,51 +53,36 @@ export function Signin () {
     }
   }
 
+  const handleUsernameChange = (value: string) => {
+    setUsername(value)
+  }
+
+  const handlePasswordChange = (value: string) => {
+    setPassword(value)
+  }
+
   return (
     <>
       {!isObjEmpty(requestResult) && <Alert result={requestResult} />}
 
       <Wrapper>
-        <FormEl onSubmit={handleLogin}>
-          <FormTitle>Login</FormTitle>
-
-          <FormDesc>Welcome back! Please login to your account.</FormDesc>
-
-          <FormInputWrapper>
-            <label htmlFor='username'>Username:</label>
-
-            <input
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              id='username'
-              type='text'
-              name='username'
-              placeholder='e.g. name_lastname'
-            />
-          </FormInputWrapper>
-
-          <FormInputWrapper>
-            <label htmlFor='password'>Password:</label>
-
-            <input
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              id='password'
-              type='password'
-              name='password'
-              placeholder='at least 4 characters'
-            />
-          </FormInputWrapper>
-
-          <Button
-            disabled={(username.length === 0 || password.length === 0) && true}
-            type='submit'
-          >
-            {isLoading ? <SpinnerBtn /> : 'Login'}
-          </Button>
-        </FormEl>
-
-        <FormNotice>Don’t have an account? <Link to='/'>Sign up</Link></FormNotice>
+        <Form
+          username={username}
+          password={password}
+          isLoading={isLoading}
+          handleUsernameChange={handleUsernameChange}
+          handlePasswordChange={handlePasswordChange}
+          handleSubmit={handleLogin}
+          title='Login'
+          description='Welcome back! Please login to your account.'
+          notice={
+            {
+              text: 'Don’t have an account?',
+              to: 'Sign up',
+              path: '/',
+            }
+          }
+        />
       </Wrapper>
     </>
   )
