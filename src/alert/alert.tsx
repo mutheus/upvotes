@@ -20,6 +20,7 @@ const AlertWrapper = styled.div<AlertWrapperProps>`${({ statusType, theme }) => 
   border-radius: 6px;
   box-shadow: 0px 10px 50px rgb(0 0 0 / 10%);
   text-align: center;
+  z-index: 10;
 
   p {
     margin: 0;
