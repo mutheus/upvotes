@@ -4,7 +4,6 @@ import {
   useContext,
 } from 'react'
 import { api } from 'services/api'
-
 import { Wrapper } from 'shared/styles'
 import { AuthContext } from 'contexts/auth-context'
 import { useNavigate } from 'react-router'

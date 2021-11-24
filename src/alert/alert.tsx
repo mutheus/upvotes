@@ -1,5 +1,5 @@
 import { ResultType } from 'feeds'
-import styled, { css } from 'styled-components'
+import styled, { css } from 'styled-components/macro'
 
 type AlertProps = {
   result: ResultType

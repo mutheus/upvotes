@@ -7,10 +7,12 @@ import { FeedType } from 'feeds'
 import { Alert } from 'alert'
 import { Spinner } from 'ui/spinner'
 import { isObjEmpty } from 'services/utils'
+import useRequestMessage from 'hooks/useRequestMessage'
 
 export function Home () {
   const [feeds, setFeeds] = useState([])
-  const [result, setResult] = useState({})
+  const [requestResult, setRequestResult] = useRequestMessage()
+  const [isLoading, setIsLoading] = useState(false)
 
   const fetchAndSetData = useCallback(async () => {
     try {
@@ -19,48 +21,53 @@ export function Home () {
       setFeeds(data)
     } catch (err: unknown) {
       if (err instanceof Error) {
-        setResult({ type: 'error', message: 'Something went wrong' })
+        setRequestResult({ type: 'error', message: 'Something went wrong. Try reloading the page.' })
       }
+    } finally {
+      setIsLoading(false)
     }
-  }, [])
+  }, [setRequestResult])
 
   useEffect(() => {
+    setIsLoading(true)
     fetchAndSetData()
   }, [fetchAndSetData])
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setResult({})
-    }, 2000)
-
-    return () => clearTimeout(timer)
-  }, [result])
 
   const onInteraction = () => {
     fetchAndSetData()
   }
 
-  if (feeds.length === 0) return <Spinner />
-
   return (
     <>
-      {!isObjEmpty(result) && <Alert result={result} />}
+      {!isObjEmpty(requestResult) && <Alert result={requestResult} />}
 
-      <S.HomeContainer>
-        <PostFeed onInteraction={onInteraction} />
+      {isLoading
+        ? (
+          <Spinner />
+          )
+        : (
+            !isObjEmpty(requestResult) || feeds.length === 0
+              ? (
+                <h6>Try again</h6>
+                )
+              : (
+                <S.HomeContainer>
+                  <PostFeed onInteraction={onInteraction} />
 
-        <S.FeedWrapper>
-          {
-            feeds.map((feed: FeedType) => (
-              <FeedItem
-                key={feed.id}
-                feed={feed}
-                onInteraction={onInteraction}
-              />
-            ))
-          }
-        </S.FeedWrapper>
-      </S.HomeContainer>
+                  <S.FeedWrapper>
+                    {
+                      feeds.map((feed: FeedType) => (
+                        <FeedItem
+                          key={feed.id}
+                          feed={feed}
+                          onInteraction={onInteraction}
+                        />
+                      ))
+                    }
+                  </S.FeedWrapper>
+                </S.HomeContainer>
+                )
+          )}
     </>
   )
 }

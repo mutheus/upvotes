@@ -76,7 +76,7 @@ export function Form ({
           {...disableFormButton(username.length, password.length)}
           type='submit'
         >
-          {isLoading ? <SpinnerBtn /> : 'Sign up'}
+          {isLoading ? <SpinnerBtn /> : title}
         </Button>
       </FormEl>
 

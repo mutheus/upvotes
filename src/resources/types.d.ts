@@ -13,7 +13,7 @@ declare module 'feeds' {
   }
 
   export type ResultType = {
-    type?: string
+    type?: 'error' | 'success'
     message?: string
   }
 }
