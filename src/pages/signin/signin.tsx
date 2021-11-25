@@ -40,12 +40,12 @@ export function Signin () {
     } catch (err: unknown) {
       if (err instanceof Error) {
         if (err.message.includes('401')) {
-          setRequestResult({ type: 'error', message: 'Incorrect username or password' })
+          setRequestResult({ type: 'error', message: 'Unknown user or incorrect username or password.' })
 
           return
         }
 
-        setRequestResult({ type: 'error', message: 'Something went wrong' })
+        setRequestResult({ type: 'error', message: 'Something went wrong.' })
       }
     } finally {
       setIsLoading(false)

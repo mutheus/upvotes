@@ -13,16 +13,10 @@ import { useNavigate } from 'react-router'
 export function Home () {
   const [feeds, setFeeds] = useState([])
   const [requestResult, setRequestResult] = useRequestMessage()
-  const [initialLoading, setinitialLoading] = useState(false)
-  const [feedLoading, setFeedLoading] = useState(false)
   const navigate = useNavigate()
 
   const fetchAndSetData = useCallback(async () => {
     try {
-      setTimeout(() => {
-        setinitialLoading(false)
-      }, 2000)
-
       const { data } = await api.get('/feeds')
 
       setFeeds(data)
@@ -31,25 +25,17 @@ export function Home () {
         if (err.message.includes('401')) {
           setRequestResult({ type: 'error', message: 'Your session has expired.' })
 
-          setTimeout(() => {
-            navigate('/login', { replace: true })
-          }, 2000)
+          navigate('/login', { replace: true })
 
           return
         }
 
-        setRequestResult({ type: 'error', message: 'Something went wrong.' })
+        setRequestResult({ type: 'error', message: 'Something went wrong. Try reloading the page.' })
       }
-    } finally {
-      setTimeout(() => {
-        setFeedLoading(false)
-      }, 2000)
     }
   }, [setRequestResult, navigate])
 
   useEffect(() => {
-    setinitialLoading(true)
-    setFeedLoading(true)
     fetchAndSetData()
   }, [fetchAndSetData])
 
@@ -57,46 +43,27 @@ export function Home () {
     fetchAndSetData()
   }
 
-  const handleReloadClick = () => {
-    setFeedLoading(true)
-    fetchAndSetData()
-  }
+  if (feeds.length === 0) return <Spinner />
 
   return (
     <>
       {!isObjEmpty(requestResult) && <Alert result={requestResult} />}
 
-      {initialLoading
-        ? (
-          <Spinner />
-          )
-        : (
-          <S.HomeContainer>
-            <PostFeed onInteraction={onInteraction} />
+      <S.HomeContainer>
+        <PostFeed onInteraction={onInteraction} />
 
-            <S.FeedWrapper>
-              {feedLoading
-                ? (
-                  <S.FeedSpinner />
-                  )
-                : (
-                    feeds.length === 0
-                      ? (
-                        <S.ReloadBtn onClick={handleReloadClick}>Try again</S.ReloadBtn>
-                        )
-                      : (
-                          feeds.map((feed: FeedType) => (
-                            <FeedItem
-                              key={feed.id}
-                              feed={feed}
-                              onInteraction={onInteraction}
-                            />
-                          ))
-                        )
-                  )}
-            </S.FeedWrapper>
-          </S.HomeContainer>
-          )}
+        <S.FeedWrapper>
+          {
+            feeds.map((feed: FeedType) => (
+              <FeedItem
+                key={feed.id}
+                feed={feed}
+                onInteraction={onInteraction}
+              />
+            ))
+          }
+        </S.FeedWrapper>
+      </S.HomeContainer>
     </>
   )
 }

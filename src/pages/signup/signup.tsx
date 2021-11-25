@@ -24,14 +24,14 @@ export function Signup () {
         password,
       })
 
-      setRequestResult({ type: 'success', message: 'Well done! Now you can log in' })
+      setRequestResult({ type: 'success', message: 'Well done! Now you can log in.' })
 
       setTimeout(() => {
         navigate('/login')
       }, 2000)
     } catch (err: unknown) {
       if (err instanceof Error) {
-        setRequestResult({ type: 'error', message: 'Something went wrong' })
+        setRequestResult({ type: 'error', message: 'Something went wrong.' })
       }
     } finally {
       setIsLoading(false)
