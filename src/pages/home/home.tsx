@@ -35,7 +35,7 @@ export function Home () {
           return
         }
 
-        setRequestResult({ type: 'error', message: 'Something went wrong. Try reloading the page.' })
+        setRequestResult({ type: 'error', message: 'Something went wrong.' })
       }
     }
   }, [setRequestResult, navigate])
@@ -64,7 +64,7 @@ export function Home () {
           <S.HomeContainer>
             <PostFeed onInteraction={onInteraction} />
 
-            <S.FeedWrapper>
+            <S.FeedWrapper data-testid='feedContainer'>
               {
                 feeds.map((feed: FeedType) => (
                   <FeedItem
